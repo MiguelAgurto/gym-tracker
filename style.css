@@ -1,147 +1,160 @@
-/* ========== Base Styles ========== */
+/* === Base Styles === */
 body {
+  font-family: sans-serif;
+  background: #f5f5f5;
+  color: #333;
   margin: 0;
-  font-family: "Segoe UI", Roboto, sans-serif;
-  background-color: #f3f3f3;
-  color: #222;
-  padding: 1rem;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  padding: 20px;
 }
 
 .container {
-  max-width: 500px;
+  max-width: 600px;
   margin: auto;
 }
 
 h1 {
   text-align: center;
-  margin-bottom: 1rem;
-  font-weight: 600;
 }
 
-/* ========== Form ========== */
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 1.5rem;
-}
-
+/* === Form Elements and Controls === */
 input,
-button {
-  padding: 12px;
+select,
+button,
+#filterInput,
+#sortSelect,
+#typeFilter {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
   font-size: 1rem;
-  border-radius: 8px;
   border: 1px solid #ccc;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  border-radius: 6px;
+  box-sizing: border-box;
 }
 
-form button[type="submit"] {
+form button {
   background-color: #4caf50;
   color: white;
-  border: none;
-  font-weight: 600;
+  font-weight: bold;
   cursor: pointer;
-}
-
-form button[type="submit"]:hover {
-  background-color: #3e8e41;
-}
-
-/* ========== Chart ========== */
-canvas {
-  max-width: 100%;
-  margin-bottom: 1.5rem;
-}
-
-/* ========== Buttons ========== */
-button#themeToggle,
-button#exportCSV {
-  margin-bottom: 1rem;
-  background-color: #007bff;
-  color: white;
   border: none;
-  font-weight: 600;
-  cursor: pointer;
 }
 
-button#themeToggle:hover,
-button#exportCSV:hover {
-  background-color: #0069d9;
+form button:hover {
+  background-color: #45a049;
 }
 
-/* ========== Workout List ========== */
-#workout-list {
+/* === Workout List === */
+ul {
   list-style: none;
   padding: 0;
 }
 
-#workout-list li {
-  background-color: white;
-  color: #000;
-  padding: 12px 16px;
-  margin-bottom: 10px;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease, color 0.3s ease;
+li {
+  background: white;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
 }
 
-#workout-list li div {
+li > div {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
   gap: 10px;
 }
 
-#workout-list li span {
-  color: #000;
+li span {
+  flex: 1;
+  margin-right: 10px;
 }
 
-/* Buttons inside each list item */
-#workout-list li button {
-  padding: 8px 12px;
-  font-size: 0.95rem;
-  font-weight: 600;
+li div > div {
+  display: flex;
+  gap: 6px;
+}
+
+/* === Buttons === */
+button {
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+}
+
+button.delete {
+  background-color: red;
+  color: white;
+}
+
+button.delete:hover {
+  background-color: darkred;
+}
+
+button.edit {
+  background-color: orange;
+  color: black;
+}
+
+button.edit:hover {
+  background-color: darkorange;
+}
+
+button.favorite {
+  background-color: gold;
+  color: black;
+}
+
+button.favorite:hover {
+  background-color: goldenrod;
+}
+
+#exportCSV {
+  background-color: dodgerblue;
+  color: white;
+  font-weight: bold;
+  padding: 10px 15px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  margin: 15px 0;
+  width: 100%;
 }
 
-#workout-list li button.edit {
-  background-color: #f0ad4e;
-  color: white;
+#exportCSV:hover {
+  background-color: #0073cc;
 }
 
-#workout-list li button.delete {
-  background-color: #d9534f;
-  color: white;
-}
-
-#workout-list li button:hover {
-  filter: brightness(0.95);
-}
-
-/* ========== Dark Mode ========== */
+/* === Dark Mode === */
 body.dark-mode {
   background-color: #121212;
-  color: #f1f1f1;
+  color: #f0f0f0;
 }
 
 body.dark-mode input,
+body.dark-mode select,
 body.dark-mode button {
-  background-color: #1e1e1e;
-  color: white;
-  border: 1px solid #444;
+  background-color: #333;
+  color: #f0f0f0;
+  border: 1px solid #555;
 }
 
-body.dark-mode #workout-list li {
-  background-color: #1e1e1e !important;
-  color: white;
-  border: 1px solid #444;
-  box-shadow: 0 2px 6px rgba(255, 255, 255, 0.05);
+body.dark-mode li {
+  background-color: #1f1f1f;
 }
 
-body.dark-mode #workout-list li span {
-  color: white !important;
+body.dark-mode button.delete {
+  background-color: red;
+  color: white;
+}
+
+body.dark-mode button.edit {
+  background-color: orange;
+  color: black;
+}
+
+body.dark-mode button.favorite {
+  background-color: gold;
+  color: black;
 }
