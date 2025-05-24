@@ -9,68 +9,76 @@
   </head>
   <body>
     <div class="container">
-      <h1>Gym Tracker</h1>
+      <header>
+        <h1>Gym Tracker</h1>
+        <button id="themeToggle">Toggle Theme</button>
+      </header>
 
-      <button id="themeToggle">Toggle Theme</button>
+      <main>
+        <section id="workout-input-section" aria-label="Add new workout">
+          <h2>Add Workout</h2>
+          <form id="workout-form">
+            <input
+              type="text"
+              id="exercise"
+              placeholder="Exercise (e.g. Push-ups)"
+              required
+            />
+            <input type="number" id="reps" placeholder="Reps" required />
+            <input type="number" id="weight" placeholder="Weight (kg)" />
+            <select id="type" required>
+              <option value="">Select type</option>
+              <option value="strength">💪 Strength</option>
+              <option value="cardio">🏃 Cardio</option>
+              <option value="stretch">🧘 Stretch</option>
+            </select>
+            <button type="submit">Add</button>
+          </form>
+        </section>
 
-      <form id="workout-form">
-        <input
-          type="text"
-          id="exercise"
-          placeholder="Exercise (e.g. Push-ups)"
-          required
-        />
-        <input type="number" id="reps" placeholder="Reps" required />
-        <input type="number" id="weight" placeholder="Weight (kg)" />
-        <select id="type" required>
-          <option value="">Select type</option>
-          <option value="strength">💪 Strength</option>
-          <option value="cardio">🏃 Cardio</option>
-          <option value="stretch">🧘 Stretch</option>
-        </select>
-        <button type="submit">Add</button>
-      </form>
+        <section id="chart-section" aria-label="Workout charts and controls">
+          <label for="chartViewSelect" class="section-label"
+            >Select your view:</label
+          >
+          <select
+            id="chartViewSelect"
+            title="Select chart view: reps, weight, or exercise type"
+            class="chart-view-select"
+          >
+            <option value="reps">Total Reps</option>
+            <option value="weight">Total Weight</option>
+            <option value="strength">Strength Exercises</option>
+            <option value="cardio">Cardio Exercises</option>
+            <option value="stretch">Stretch Exercises</option>
+          </select>
+          <canvas id="workoutChart" height="200"></canvas>
+        </section>
 
-      <label for="chartViewSelect" style="margin-top: 1em; font-weight: bold"
-        >Select your view:</label
-      >
-      <select
-        id="chartViewSelect"
-        title="Select chart view: reps, weight, or exercise type"
-        style="width: 100%; padding: 10px; margin-bottom: 1em"
-      >
-        <option value="reps">Total Reps</option>
-        <option value="weight">Total Weight</option>
-        <option value="strength">Strength Exercises</option>
-        <option value="cardio">Cardio Exercises</option>
-        <option value="stretch">Stretch Exercises</option>
-      </select>
+        <section id="filters-section" aria-label="Filter and sort workouts">
+          <input
+            type="text"
+            id="filterInput"
+            placeholder="Filter by exercise..."
+          />
+        </section>
 
-      <canvas id="workoutChart" height="200"></canvas>
+        <section id="stats-section" aria-label="Workout statistics">
+          <div id="todaySessionStats" class="stats-card">
+            <h3>Today's Session</h3>
+            <p id="todayReps">Total Reps: 0</p>
+            <p id="todayTypes">Exercise Types: 0</p>
+            <p id="sessionTime">Session Time: -</p>
+          </div>
 
-      <hr />
+          <div id="statsBox" class="stats-card">
+            <!-- Weekly stats get dynamically inserted here -->
+          </div>
+        </section>
 
-      <input type="text" id="filterInput" placeholder="Filter by exercise..." />
-
-      <div id="statsBox"></div>
-
-      <!-- New Today's Session Stats -->
-      <div
-        id="todaySessionStats"
-        style="
-          margin-top: 1em;
-          padding: 10px;
-          border: 1px solid #ccc;
-          border-radius: 8px;
-        "
-      >
-        <h3>Today's Session</h3>
-        <p id="todayReps">Total Reps: 0</p>
-        <p id="todayTypes">Exercise Types: 0</p>
-        <p id="sessionTime">Session Time: -</p>
-      </div>
-
-      <ul id="workout-list"></ul>
+        <section id="workout-list-section" aria-label="List of workouts">
+          <ul id="workout-list"></ul>
+        </section>
+      </main>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

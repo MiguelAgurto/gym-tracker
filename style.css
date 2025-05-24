@@ -1,6 +1,6 @@
 /* === Base Styles === */
 body {
-  font-family: sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: #f5f5f5;
   color: #333;
   margin: 0;
@@ -8,122 +8,267 @@ body {
 }
 
 .container {
-  max-width: 600px;
+  max-width: 650px;
   margin: auto;
 }
 
-h1 {
-  text-align: center;
+/* === Header === */
+header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1em 0;
+  border-bottom: 1px solid #ccc;
 }
 
-/* === Form Elements and Controls === */
-input,
-select,
-button,
-#filterInput,
-#sortSelect,
-#typeFilter {
-  width: 100%;
+header h1 {
+  margin: 0;
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+#themeToggle {
+  position: absolute;
+  right: 1em;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.3s ease;
+}
+
+#themeToggle:hover {
+  color: #4caf50;
+}
+
+/* === Form Elements === */
+form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+form input,
+form select {
+  flex: 1 1 120px;
   padding: 10px;
-  margin: 8px 0;
   font-size: 1rem;
-  border: 1px solid #ccc;
   border-radius: 6px;
+  border: 1px solid #ccc;
   box-sizing: border-box;
 }
 
 form button {
+  flex: 1 1 100%;
   background-color: #4caf50;
   color: white;
   font-weight: bold;
   cursor: pointer;
   border: none;
+  padding: 12px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
 }
 
 form button:hover {
   background-color: #45a049;
 }
 
+/* === Sections === */
+section {
+  margin-bottom: 2em;
+}
+
+.section-label {
+  font-weight: bold;
+  margin-bottom: 0.5em;
+  display: block;
+}
+
+/* === Chart View Select === */
+.chart-view-select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.chart-view-select:hover,
+.chart-view-select:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+
+/* === Filters === */
+#filterInput {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+/* === Stats Cards === */
+.stats-card {
+  background: white;
+  padding: 1em;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* === Stats Cards Text Color in Dark Mode === */
+body.dark-mode .stats-card {
+  color: #eee !important; /* Make stats text bright and readable */
+  background-color: #222 !important; /* Slightly darker bg for contrast */
+  border-color: #444 !important;
+}
+
 /* === Workout List === */
-ul {
+ul#workout-list {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
-li {
-  background: white;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 8px;
-}
-
-li > div {
+ul#workout-list li {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: flex-start; /* Align children to start (left) */
+  padding: 10px;
+  border-radius: 8px;
+  background-color: white;
+  margin-bottom: 10px;
   gap: 10px;
 }
 
-li span {
-  flex: 1;
-  margin-right: 10px;
+body.dark-mode ul#workout-list li {
+  background-color: #1f1f1f;
 }
 
-li div > div {
+/* The text span should grow and align left */
+ul#workout-list li span {
+  flex-grow: 1; /* Makes span expand to fill space */
+  margin-right: 10px;
+  text-align: left; /* Align text left */
+  min-width: 0; /* Prevent flexbox overflow */
+  display: block;
+}
+
+/* Buttons container stays on the right */
+ul#workout-list li div:last-child {
   display: flex;
-  gap: 6px;
+  gap: 10px;
+  margin-left: auto; /* Push buttons to the far right */
 }
 
 /* === Buttons === */
 button {
+  min-width: 36px;
   padding: 6px 10px;
   border-radius: 6px;
   font-size: 1rem;
   cursor: pointer;
   border: none;
+  transition: background-color 0.3s ease;
 }
 
+/* Delete Button */
 button.delete {
-  background-color: red;
+  background-color: #e74c3c;
   color: white;
 }
 
 button.delete:hover {
-  background-color: darkred;
+  background-color: #c0392b;
 }
 
+/* Edit Button */
 button.edit {
-  background-color: orange;
+  background-color: #f39c12;
   color: black;
 }
 
 button.edit:hover {
-  background-color: darkorange;
+  background-color: #d68910;
 }
 
+/* Favorite Button */
 button.favorite {
-  background-color: gold;
+  background-color: #f1c40f;
   color: black;
 }
 
 button.favorite:hover {
-  background-color: goldenrod;
+  background-color: #d4ac0d;
 }
 
+/* === Dark Mode Buttons === */
+body.dark-mode button.delete {
+  background-color: #e74c3c;
+  color: white;
+}
+
+body.dark-mode button.delete:hover {
+  background-color: #c0392b;
+}
+
+body.dark-mode button.edit {
+  background-color: #f39c12;
+  color: black;
+}
+
+body.dark-mode button.edit:hover {
+  background-color: #d68910;
+}
+
+body.dark-mode button.favorite {
+  background-color: #f1c40f;
+  color: black;
+}
+
+body.dark-mode button.favorite:hover {
+  background-color: #d4ac0d;
+}
+
+/* === Export CSV Button === */
 #exportCSV {
-  background-color: dodgerblue;
+  background-color: #3498db;
   color: white;
   font-weight: bold;
-  padding: 10px 15px;
+  padding: 12px 15px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   margin: 15px 0;
   width: 100%;
+  transition: background-color 0.3s ease;
 }
 
 #exportCSV:hover {
-  background-color: #0073cc;
+  background-color: #2980b9;
+}
+
+/* === Chart fade-in animation === */
+.chart-fade {
+  animation: fadeInChart 0.5s ease forwards;
+}
+
+@keyframes fadeInChart {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* === Dark Mode === */
@@ -138,23 +283,4 @@ body.dark-mode button {
   background-color: #333;
   color: #f0f0f0;
   border: 1px solid #555;
-}
-
-body.dark-mode li {
-  background-color: #1f1f1f;
-}
-
-body.dark-mode button.delete {
-  background-color: red;
-  color: white;
-}
-
-body.dark-mode button.edit {
-  background-color: orange;
-  color: black;
-}
-
-body.dark-mode button.favorite {
-  background-color: gold;
-  color: black;
 }

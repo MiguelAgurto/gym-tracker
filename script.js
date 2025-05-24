@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const themeToggle = document.getElementById('themeToggle');
   const filterInput = document.getElementById('filterInput');
   const statsBox = document.getElementById('statsBox');
-  const todaySessionStats = document.getElementById('todaySessionStats');
   const chartViewSelect = document.getElementById('chartViewSelect');
 
   const sortSelect = document.createElement('select');
@@ -35,15 +34,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let savedWorkouts = JSON.parse(localStorage.getItem('workouts')) || [];
 
-  // === Theme Toggle Logic ===
+  // === Theme Toggle Logic with Sun/Moon icons ===
+  function updateThemeIcon() {
+    if (document.body.classList.contains('dark-mode')) {
+      themeToggle.textContent = '🌙'; // moon icon for dark mode
+    } else {
+      themeToggle.textContent = '☀️'; // sun icon for light mode
+    }
+  }
+
   themeToggle.addEventListener('click', () => {
     document.body.classList.toggle('dark-mode');
     localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+    updateThemeIcon();
   });
 
+  // Initialize theme on page load
   if (localStorage.getItem('theme') === 'dark') {
     document.body.classList.add('dark-mode');
   }
+  updateThemeIcon();
 
   // === Export Button Setup ===
   const exportBtn = document.createElement('button');
@@ -140,7 +150,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalWeight = recent.reduce((sum, w) => sum + (parseFloat(w.weight) || 0), 0);
     const sessionCount = recent.length;
 
-    // Calculate unique session days in recent data (daily sessions)
     const sessionDays = new Set();
     recent.forEach(w => {
       sessionDays.add(new Date(w.createdAt).toLocaleDateString());
@@ -167,19 +176,14 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateTodaySessionStats(data) {
     const today = new Date().toLocaleDateString();
 
-    // Filter workouts for today only
     const todayWorkouts = data.filter(w => {
       return new Date(w.createdAt).toLocaleDateString() === today;
     });
 
-    // Calculate total reps today
     const totalReps = todayWorkouts.reduce((sum, w) => sum + parseInt(w.reps, 10), 0);
-
-    // Count distinct exercise types today
     const exerciseTypes = new Set(todayWorkouts.map(w => w.exercise.toLowerCase()));
     const typeCount = exerciseTypes.size;
 
-    // Find start and finish time of today’s session
     if (todayWorkouts.length > 0) {
       const times = todayWorkouts.map(w => new Date(w.createdAt));
       const startTime = new Date(Math.min(...times));
@@ -187,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       document.getElementById('todayReps').textContent = `Total Reps: ${totalReps}`;
       document.getElementById('todayTypes').textContent = `Exercise Types: ${typeCount}`;
-      document.getElementById('sessionTime').textContent = 
+      document.getElementById('sessionTime').textContent =
         `Session Time: ${startTime.toLocaleTimeString()} - ${finishTime.toLocaleTimeString()}`;
     } else {
       document.getElementById('todayReps').textContent = 'Total Reps: 0';
@@ -208,6 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
     container.style.display = 'flex';
     container.style.justifyContent = 'space-between';
     container.style.alignItems = 'center';
+    container.style.gap = '10px';
 
     const formattedDate = new Date(workout.createdAt).toLocaleString();
     const emoji = { strength: '💪', cardio: '🏃', stretch: '🧘' }[workout.type] || '';
@@ -289,6 +294,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const buttonWrapper = document.createElement('div');
+    buttonWrapper.style.display = 'flex';
+    buttonWrapper.style.gap = '6px';
     buttonWrapper.appendChild(favBtn);
     buttonWrapper.appendChild(editBtn);
     buttonWrapper.appendChild(deleteBtn);
@@ -320,20 +327,17 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateChart(data, view = 'reps') {
     let filteredData = data;
 
-    // Filter by exercise type if view is one of those
     if (['strength', 'cardio', 'stretch'].includes(view)) {
       filteredData = data.filter(w => w.type === view);
-      view = 'reps'; // Show reps for these filtered types
+      view = 'reps';
     }
 
-    // Aggregate data by day
     const aggData = {};
     filteredData.forEach(w => {
       const date = new Date(w.createdAt).toLocaleDateString();
       if (view === 'weight') {
         aggData[date] = (aggData[date] || 0) + (parseFloat(w.weight) || 0);
       } else {
-        // default to reps count
         aggData[date] = (aggData[date] || 0) + parseInt(w.reps, 10);
       }
     });
@@ -365,9 +369,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Animate chart fade-in
     chartCanvas.classList.remove('chart-fade');
-    void chartCanvas.offsetWidth; // Trigger reflow for animation restart
+    void chartCanvas.offsetWidth;
     chartCanvas.classList.add('chart-fade');
   }
 });
