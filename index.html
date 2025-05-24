@@ -11,7 +11,15 @@
     <div class="container">
       <header>
         <h1>Gym Tracker</h1>
-        <button id="themeToggle">Toggle Theme</button>
+        <nav id="headerMenu" aria-label="Main navigation">
+          <button
+            id="themeToggle"
+            aria-label="Toggle theme"
+            title="Toggle light/dark mode"
+          >
+            ☀️
+          </button>
+        </nav>
       </header>
 
       <main>
@@ -37,6 +45,7 @@
         </section>
 
         <section id="chart-section" aria-label="Workout charts and controls">
+          <h2>Workout Chart</h2>
           <label for="chartViewSelect" class="section-label"
             >Select your view:</label
           >
@@ -55,11 +64,13 @@
         </section>
 
         <section id="filters-section" aria-label="Filter and sort workouts">
+          <h2>Filter & Sort Workouts</h2>
           <input
             type="text"
             id="filterInput"
             placeholder="Filter by exercise..."
           />
+          <!-- sortSelect and typeFilterSelect inserted dynamically -->
         </section>
 
         <section id="stats-section" aria-label="Workout statistics">
@@ -71,11 +82,13 @@
           </div>
 
           <div id="statsBox" class="stats-card">
-            <!-- Weekly stats get dynamically inserted here -->
+            <h3>Weekly Summary</h3>
+            <!-- Weekly stats inserted dynamically -->
           </div>
         </section>
 
         <section id="workout-list-section" aria-label="List of workouts">
+          <h2>Workout History</h2>
           <ul id="workout-list"></ul>
         </section>
       </main>

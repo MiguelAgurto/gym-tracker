@@ -1,7 +1,7 @@
-/* === Base Styles === */
+/* === Light Mode (Default) === */
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: #f5f5f5;
+  background-color: #fff;
   color: #333;
   margin: 0;
   padding: 20px;
@@ -15,27 +15,34 @@ body {
 /* === Header === */
 header {
   position: relative;
+  padding: 1em 0 2.5em;
+  border-bottom: 1px solid #ccc;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 1em 0;
-  border-bottom: 1px solid #ccc;
+  justify-content: space-between;
 }
 
 header h1 {
   margin: 0;
   font-weight: bold;
   font-size: 2rem;
+  line-height: 1.2;
+  white-space: normal;
+}
+
+#headerMenu {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 #themeToggle {
-  position: absolute;
-  right: 1em;
+  font-size: 1.8rem;
+  cursor: pointer;
   background: none;
   border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
   user-select: none;
+  color: inherit;
   transition: color 0.3s ease;
 }
 
@@ -43,91 +50,57 @@ header h1 {
   color: #4caf50;
 }
 
-/* === Form Elements === */
+/* === Section Titles === */
+h2 {
+  margin-bottom: 0.5em;
+  font-weight: bold;
+  border-bottom: 2px solid #4caf50;
+  padding-bottom: 0.25em;
+  color: #333;
+}
+
+h3 {
+  margin-top: 0;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+  color: #333;
+}
+
+/* === Form Elements and Controls === */
 form {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
 }
 
-form input,
-form select {
-  flex: 1 1 120px;
+input,
+select,
+button,
+#filterInput,
+#sortSelect,
+#typeFilter {
+  width: 100%;
   padding: 10px;
+  margin: 8px 0;
   font-size: 1rem;
-  border-radius: 6px;
   border: 1px solid #ccc;
+  border-radius: 6px;
   box-sizing: border-box;
+  background-color: #fff;
+  color: #333;
 }
 
 form button {
-  flex: 1 1 100%;
   background-color: #4caf50;
   color: white;
   font-weight: bold;
   cursor: pointer;
   border: none;
-  padding: 12px;
-  border-radius: 6px;
   transition: background-color 0.3s ease;
 }
 
 form button:hover {
   background-color: #45a049;
-}
-
-/* === Sections === */
-section {
-  margin-bottom: 2em;
-}
-
-.section-label {
-  font-weight: bold;
-  margin-bottom: 0.5em;
-  display: block;
-}
-
-/* === Chart View Select === */
-.chart-view-select {
-  width: 100%;
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: border-color 0.3s ease;
-}
-
-.chart-view-select:hover,
-.chart-view-select:focus {
-  border-color: #4caf50;
-  outline: none;
-}
-
-/* === Filters === */
-#filterInput {
-  width: 100%;
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  box-sizing: border-box;
-}
-
-/* === Stats Cards === */
-.stats-card {
-  background: white;
-  padding: 1em;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
-
-/* === Stats Cards Text Color in Dark Mode === */
-body.dark-mode .stats-card {
-  color: #eee !important; /* Make stats text bright and readable */
-  background-color: #222 !important; /* Slightly darker bg for contrast */
-  border-color: #444 !important;
 }
 
 /* === Workout List === */
@@ -138,39 +111,34 @@ ul#workout-list {
 }
 
 ul#workout-list li {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start; /* Align children to start (left) */
+  background: #f9f9f9;
   padding: 10px;
+  margin: 10px 0;
   border-radius: 8px;
-  background-color: white;
-  margin-bottom: 10px;
-  gap: 10px;
+  color: #333;
 }
 
-body.dark-mode ul#workout-list li {
-  background-color: #1f1f1f;
-}
-
-/* The text span should grow and align left */
-ul#workout-list li span {
-  flex-grow: 1; /* Makes span expand to fill space */
-  margin-right: 10px;
-  text-align: left; /* Align text left */
-  min-width: 0; /* Prevent flexbox overflow */
-  display: block;
-}
-
-/* Buttons container stays on the right */
-ul#workout-list li div:last-child {
+ul#workout-list li > div {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   gap: 10px;
-  margin-left: auto; /* Push buttons to the far right */
+}
+
+ul#workout-list li span {
+  flex: 1;
+  margin-right: 10px;
+  word-break: break-word;
+  text-align: left;
+}
+
+ul#workout-list li div > div {
+  display: flex;
+  gap: 6px;
 }
 
 /* === Buttons === */
 button {
-  min-width: 36px;
   padding: 6px 10px;
   border-radius: 6px;
   font-size: 1rem;
@@ -179,7 +147,6 @@ button {
   transition: background-color 0.3s ease;
 }
 
-/* Delete Button */
 button.delete {
   background-color: #e74c3c;
   color: white;
@@ -189,7 +156,6 @@ button.delete:hover {
   background-color: #c0392b;
 }
 
-/* Edit Button */
 button.edit {
   background-color: #f39c12;
   color: black;
@@ -199,7 +165,6 @@ button.edit:hover {
   background-color: #d68910;
 }
 
-/* Favorite Button */
 button.favorite {
   background-color: #f1c40f;
   color: black;
@@ -209,7 +174,91 @@ button.favorite:hover {
   background-color: #d4ac0d;
 }
 
-/* === Dark Mode Buttons === */
+#exportCSV {
+  background-color: #3498db;
+  color: white;
+  font-weight: bold;
+  padding: 12px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 15px 0;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+#exportCSV:hover {
+  background-color: #2980b9;
+}
+
+/* === Stats Cards === */
+.stats-card {
+  background: #f9f9f9;
+  padding: 1em;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: none;
+  color: #333;
+  margin-bottom: 1.5em;
+}
+
+/* === Chart fade-in animation === */
+.chart-fade {
+  animation: fadeInChart 0.5s ease forwards;
+}
+
+@keyframes fadeInChart {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === Dark Mode Overrides === */
+body.dark-mode {
+  background-color: #121212;
+  color: #f0f0f0;
+}
+
+body.dark-mode header {
+  border-bottom-color: #444;
+}
+
+body.dark-mode h2,
+body.dark-mode h3 {
+  color: #f0f0f0;
+}
+
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode button,
+body.dark-mode #filterInput,
+body.dark-mode #sortSelect,
+body.dark-mode #typeFilter {
+  background-color: #333;
+  color: #f0f0f0;
+  border: 1px solid #555;
+}
+
+/* Keep the Add button green in dark mode */
+body.dark-mode form button {
+  background-color: #4caf50 !important;
+  color: white !important;
+}
+
+body.dark-mode form button:hover {
+  background-color: #45a049 !important;
+}
+
+body.dark-mode ul#workout-list li {
+  background-color: #1f1f1f;
+  color: #eee;
+}
+
 body.dark-mode button.delete {
   background-color: #e74c3c;
   color: white;
@@ -237,50 +286,8 @@ body.dark-mode button.favorite:hover {
   background-color: #d4ac0d;
 }
 
-/* === Export CSV Button === */
-#exportCSV {
-  background-color: #3498db;
-  color: white;
-  font-weight: bold;
-  padding: 12px 15px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  margin: 15px 0;
-  width: 100%;
-  transition: background-color 0.3s ease;
-}
-
-#exportCSV:hover {
-  background-color: #2980b9;
-}
-
-/* === Chart fade-in animation === */
-.chart-fade {
-  animation: fadeInChart 0.5s ease forwards;
-}
-
-@keyframes fadeInChart {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* === Dark Mode === */
-body.dark-mode {
-  background-color: #121212;
-  color: #f0f0f0;
-}
-
-body.dark-mode input,
-body.dark-mode select,
-body.dark-mode button {
-  background-color: #333;
-  color: #f0f0f0;
-  border: 1px solid #555;
+body.dark-mode .stats-card {
+  background: #1f1f1f;
+  border-color: #444;
+  color: #eee;
 }

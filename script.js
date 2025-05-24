@@ -1,4 +1,3 @@
-// === App Initialization ===
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('workout-form');
   const exerciseInput = document.getElementById('exercise');
@@ -55,16 +54,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   updateThemeIcon();
 
-  // === Export Button Setup ===
-  const exportBtn = document.createElement('button');
-  exportBtn.textContent = 'Export to CSV';
-  exportBtn.id = 'exportCSV';
-  workoutList.before(exportBtn);
-
   let currentFilteredWorkouts = [...savedWorkouts]; // store filtered workouts globally
 
   renderWorkoutList(savedWorkouts);
-  updateChart(savedWorkouts, chartViewSelect.value);
+  updateChart(savedWorkouts, chartViewSelect ? chartViewSelect.value : 'reps');
   updateStats(savedWorkouts);
   updateTodaySessionStats(savedWorkouts);
 
@@ -92,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('workouts', JSON.stringify(savedWorkouts));
     currentFilteredWorkouts = [...savedWorkouts];
     renderWorkoutList(savedWorkouts);
-    updateChart(savedWorkouts, chartViewSelect.value);
+    updateChart(savedWorkouts, chartViewSelect ? chartViewSelect.value : 'reps');
     updateStats(savedWorkouts);
     updateTodaySessionStats(savedWorkouts);
 
@@ -106,9 +99,11 @@ document.addEventListener('DOMContentLoaded', () => {
   filterInput.addEventListener('input', updateFilteredView);
   typeFilterSelect.addEventListener('change', updateFilteredView);
   sortSelect.addEventListener('change', updateFilteredView);
-  chartViewSelect.addEventListener('change', () => {
-    updateChart(currentFilteredWorkouts, chartViewSelect.value);
-  });
+  if (chartViewSelect) {
+    chartViewSelect.addEventListener('change', () => {
+      updateChart(currentFilteredWorkouts, chartViewSelect.value);
+    });
+  }
 
   function updateFilteredView() {
     let filtered = [...savedWorkouts];
@@ -134,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     currentFilteredWorkouts = filtered;
     renderWorkoutList(filtered);
-    updateChart(filtered, chartViewSelect.value);
+    updateChart(filtered, chartViewSelect ? chartViewSelect.value : 'reps');
     updateStats(filtered);
     updateTodaySessionStats(filtered);
   }
@@ -237,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
         savedWorkouts = savedWorkouts.filter(item => item.id !== workout.id);
         localStorage.setItem('workouts', JSON.stringify(savedWorkouts));
         renderWorkoutList(savedWorkouts);
-        updateChart(savedWorkouts, chartViewSelect.value);
+        updateChart(savedWorkouts, chartViewSelect ? chartViewSelect.value : 'reps');
         updateStats(savedWorkouts);
         updateTodaySessionStats(savedWorkouts);
       }
@@ -286,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
         workout.weight = weightField.value;
         workout.type = typeField.value;
         localStorage.setItem('workouts', JSON.stringify(savedWorkouts));
-        updateChart(savedWorkouts, chartViewSelect.value);
+        updateChart(savedWorkouts, chartViewSelect ? chartViewSelect.value : 'reps');
         renderWorkoutList(savedWorkouts);
         updateStats(savedWorkouts);
         updateTodaySessionStats(savedWorkouts);
@@ -294,8 +289,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const buttonWrapper = document.createElement('div');
-    buttonWrapper.style.display = 'flex';
-    buttonWrapper.style.gap = '6px';
     buttonWrapper.appendChild(favBtn);
     buttonWrapper.appendChild(editBtn);
     buttonWrapper.appendChild(deleteBtn);
@@ -306,24 +299,29 @@ document.addEventListener('DOMContentLoaded', () => {
     workoutList.appendChild(li);
   }
 
-  exportBtn.addEventListener('click', () => {
-    if (!savedWorkouts.length) return;
-    const headers = ['Exercise', 'Reps', 'Weight', 'Type', 'Date'];
-    const rows = savedWorkouts.map(w => [
-      w.exercise,
-      w.reps,
-      w.weight || '',
-      w.type,
-      new Date(w.createdAt).toLocaleString()
-    ]);
-    const csv = [headers, ...rows].map(r => r.map(f => `"${f}"`).join(',')).join('\n');
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'workouts.csv';
-    link.click();
-  });
+  // === Export to CSV ===
+  const exportBtn = document.getElementById('exportCSV');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', () => {
+      if (!savedWorkouts.length) return;
+      const headers = ['Exercise', 'Reps', 'Weight', 'Type', 'Date'];
+      const rows = savedWorkouts.map(w => [
+        w.exercise,
+        w.reps,
+        w.weight || '',
+        w.type,
+        new Date(w.createdAt).toLocaleString()
+      ]);
+      const csv = [headers, ...rows].map(r => r.map(f => `"${f}"`).join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'workouts.csv';
+      link.click();
+    });
+  }
 
+  // === Chart Update Function ===
   function updateChart(data, view = 'reps') {
     let filteredData = data;
 
